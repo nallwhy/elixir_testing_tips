@@ -24,3 +24,5 @@ elixir_testing_tips-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+/database
