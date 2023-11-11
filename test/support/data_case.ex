@@ -21,6 +21,7 @@ defmodule ElixirTestingTips.DataCase do
       alias ElixirTestingTips.Repo
 
       import ElixirTestingTips.DataCase
+      alias ElixirTestingTips.Factory
     end
   end
 
