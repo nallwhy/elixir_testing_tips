@@ -88,7 +88,7 @@ defmodule ElixirTestingTips.Domain.PaymentsTest do
 
     test "with valid payment_id", %{payment: payment} do
       assert {:ok, fetched_payment} = Payments.fetch_payment(payment.id)
-      assert fetched_payment == payment
+      assert_same_records fetched_payment, payment
     end
 
     test "with invalid payment_id" do
