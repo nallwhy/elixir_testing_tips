@@ -23,12 +23,25 @@ defmodule ElixirTestingTips.Domain.Payments.Payment do
     |> validate_required([:amount, :created_at])
   end
 
+  def changeset_for_request(%__MODULE__{} = struct, attrs) do
+    struct
+    |> cast(attrs, [:status, :requested_at])
+    |> validate_required([:requested_at])
+  end
+
   defmodule Command do
     alias ElixirTestingTips.Domain.Payments.Payment
 
     def create(attrs) do
       %Payment{}
       |> Payment.changeset_for_create(attrs)
+    end
+
+    def request(%Payment{} = payment, attrs) do
+      attrs = attrs |> Map.merge(%{status: :requested})
+
+      payment
+      |> Payment.changeset_for_request(attrs)
     end
   end
 
