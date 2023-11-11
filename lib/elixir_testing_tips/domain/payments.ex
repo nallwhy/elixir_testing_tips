@@ -25,6 +25,15 @@ defmodule ElixirTestingTips.Domain.Payments do
     end
   end
 
+  def fail_payment(payment_id) do
+    with {:ok, payment} <- fetch_payment(payment_id),
+         :ok <- check_payment_status(payment, :requested),
+         {:ok, %Payment{} = _updated_payment} <-
+           Payment.Command.fail(payment, %{failed_at: DateTime.utc_now()}) |> Repo.update() do
+      fetch_payment(payment_id)
+    end
+  end
+
   def fetch_payment(payment_id) do
     Payment.Query.get(payment_id)
     |> Repo.one()

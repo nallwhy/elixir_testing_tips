@@ -63,6 +63,22 @@ defmodule ElixirTestingTips.Domain.PaymentsTest do
     end
   end
 
+  describe "fail_payment/1" do
+    setup do
+      now = DateTime.utc_now()
+      payment = Factory.insert(:payment, status: :requested, created_at: now, requested_at: now)
+
+      %{payment: payment}
+    end
+
+    test "with valid payment_id", %{payment: payment} do
+      assert {:ok, %Payment{} = payment} = Payments.fail_payment(payment.id)
+      assert payment.status == :failed
+      assert payment.failed_at != nil
+      assert payment.confirmed_at == nil
+    end
+  end
+
   describe "fetch_payment/1" do
     setup do
       payment = Factory.insert(:payment)
