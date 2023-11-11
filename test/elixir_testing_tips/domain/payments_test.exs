@@ -8,7 +8,7 @@ defmodule ElixirTestingTips.Domain.PaymentsTest do
       attrs = %{amount: 100}
 
       assert {:ok, %Payment{} = payment} = Payments.create_payment(attrs)
-      assert payment.amount == attrs.amount
+      assert_same_values payment.amount, attrs.amount
       assert payment.status == :pending
       assert payment.created_at != nil
       assert payment.requested_at == nil
