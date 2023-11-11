@@ -19,7 +19,7 @@ defmodule ElixirTestingTips.Domain.PaymentsTest do
 
   describe "request_payment/1" do
     setup do
-      payment = Factory.insert(:payment, status: :pending, created_at: DateTime.utc_now())
+      payment = Factory.insert(:payment, status: :pending)
 
       %{payment: payment}
     end
@@ -33,10 +33,7 @@ defmodule ElixirTestingTips.Domain.PaymentsTest do
     end
 
     test "with already requested payment_id" do
-      now = DateTime.utc_now()
-
-      already_requested_payment =
-        Factory.insert(:payment, status: :requested, created_at: now, requested_at: now)
+      already_requested_payment = Factory.insert(:payment, status: :requested)
 
       assert {:error, :payment_invalid_status} =
                Payments.request_payment(already_requested_payment.id)
@@ -49,8 +46,7 @@ defmodule ElixirTestingTips.Domain.PaymentsTest do
 
   describe "confirm_payment/1" do
     setup do
-      now = DateTime.utc_now()
-      payment = Factory.insert(:payment, status: :requested, created_at: now, requested_at: now)
+      payment = Factory.insert(:payment, status: :requested)
 
       %{payment: payment}
     end
@@ -65,8 +61,7 @@ defmodule ElixirTestingTips.Domain.PaymentsTest do
 
   describe "fail_payment/1" do
     setup do
-      now = DateTime.utc_now()
-      payment = Factory.insert(:payment, status: :requested, created_at: now, requested_at: now)
+      payment = Factory.insert(:payment, status: :requested)
 
       %{payment: payment}
     end
