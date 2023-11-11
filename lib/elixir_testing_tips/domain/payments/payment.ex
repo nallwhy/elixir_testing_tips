@@ -29,6 +29,12 @@ defmodule ElixirTestingTips.Domain.Payments.Payment do
     |> validate_required([:requested_at])
   end
 
+  def changeset_for_confirm(%__MODULE__{} = struct, attrs) do
+    struct
+    |> cast(attrs, [:status, :confirmed_at])
+    |> validate_required([:confirmed_at])
+  end
+
   defmodule Command do
     alias ElixirTestingTips.Domain.Payments.Payment
 
@@ -42,6 +48,13 @@ defmodule ElixirTestingTips.Domain.Payments.Payment do
 
       payment
       |> Payment.changeset_for_request(attrs)
+    end
+
+    def confirm(%Payment{} = payment, attrs) do
+      attrs = attrs |> Map.merge(%{status: :confirmed})
+
+      payment
+      |> Payment.changeset_for_confirm(attrs)
     end
   end
 
