@@ -29,7 +29,8 @@ defmodule ElixirTestingTips.MixProject do
   defp deps do
     [
       {:ecto_sql, "~> 3.10"},
-      {:ecto_sqlite3, "~> 0.12"}
+      {:ecto_sqlite3, "~> 0.12"},
+      {:doumi_test, "~> 0.1.3"}
     ]
   end
 

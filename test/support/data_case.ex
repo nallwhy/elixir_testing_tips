@@ -22,6 +22,7 @@ defmodule ElixirTestingTips.DataCase do
 
       import ElixirTestingTips.DataCase
       alias ElixirTestingTips.Factory
+      use Doumi.Test
     end
   end
 
