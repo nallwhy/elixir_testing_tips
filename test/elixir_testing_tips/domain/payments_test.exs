@@ -16,4 +16,21 @@ defmodule ElixirTestingTips.Domain.PaymentsTest do
       assert payment.failed_at == nil
     end
   end
+
+  describe "fetch_payment/1" do
+    setup do
+      payment = Factory.insert(:payment)
+
+      %{payment: payment}
+    end
+
+    test "with valid payment_id", %{payment: payment} do
+      assert {:ok, fetched_payment} = Payments.fetch_payment(payment.id)
+      assert fetched_payment == payment
+    end
+
+    test "with invalid payment_id" do
+      assert {:error, :not_found} = Payments.fetch_payment(0)
+    end
+  end
 end
